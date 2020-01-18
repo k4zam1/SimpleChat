@@ -1,0 +1,38 @@
+
+div,ul,li,a,p {
+    margin:0;
+    padding:0;
+}
+
+ul {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    font-size:14px;
+}
+
+.message {
+    width:500px;
+    height:auto;
+    text-decoration: none;
+    color:#000;
+    border:solid 1px #6666CC;
+    word-wrap: break-word;
+}
+
+.form {
+    width:500px;
+    height:auto;
+    border:solid 1px #6666CC;
+    word-wrap:break-word;
+}
+
+.input-name {
+    width:100px;
+    white-space: pre-line;
+}
+
+.input-msg {
+    width:400px;
+    height:200px;
+}

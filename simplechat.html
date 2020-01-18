@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<title>Simple Chat</title>
+<link rel="stylesheet" href="simplechat.css">
+<script src="https://unpkg.com/vue@2.5.17"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<div id="app">
+    <message-list></message-list>
+    <message-form></message-form>
+</div>
+
+<script type="text/x-template" id="message-list">
+    <ul>
+        <ul class="message" v-for="item in items" :key="item._id">
+            <li>name : {{ item.name }}</li>
+            <li>time : {{ item.time }}</li>
+            <li>message : {{ item.payload }}</li>
+        </ul>
+    </ul>
+</script>
+<script type="text/x-template" id="message-form">
+    <div class="form">
+        <form @submit.prevent="pushDataBase">
+            <label><input class="input-name" v-model="name" placeholder="name"></label>
+            <label><textarea class="input-msg" v-model="msg" placeholder="message"></textarea></label>
+            <button type="submit">送信</button>
+        </form>
+    </div>
+</script>
+
+<script>
+var APIURL = "http://localhost:8000/"
+var items = []
+var query = "";
+
+var setItems = function(query){
+    d3.json(APIURL+query,function(error,data){
+        // logging
+        if(error){
+            return console.warn(error);
+        }
+
+        // unixtimeを変換してitemsにpush
+        for(var i=items.length;i<data.messages.length;i++){
+            var dataTime = new Date(data.messages[i].time * 1000);
+            data.messages[i].time = dataTime.toLocaleDateString() + " " + dataTime.toLocaleTimeString("ja-JP");
+            items.push(data.messages[i]);
+        }
+    });
+    return items;
+};
+
+// message list component
+var MessageList = {
+    data:function(){
+        setItems(query);
+        return {items:items};
+    },
+    template:"#message-list"
+}
+
+// input form component
+var MessageForm = {
+    data:function(){
+        return {name:"",msg:""}
+    },
+    template:"#message-form",
+    methods:{
+        pushDataBase:function(){
+            var date = new Date() ;
+            var post_time = date.getTime();
+            post_time = Math.floor( post_time / 1000 );
+            POST_URL = APIURL+"post/"+this.name+"&"+post_time+"&"+this.msg;
+            console.log(POST_URL);
+            fetch(POST_URL);
+            setItems("");
+            this.msg = "";
+        }
+    }
+}
+
+new Vue({
+    el:"#app",
+    created:function(){
+        setInterval(() => setItems(""),10000);
+    },
+    components:{
+        MessageList:MessageList,
+        MessageForm:MessageForm
+    }
+});
+
+</script>
