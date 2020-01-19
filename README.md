@@ -8,5 +8,6 @@ Vue.js,Flaskを使ったシンプルなチャット
 * requirements: requirements.txt
 
 ## Start
-$ python3 server.py
+$ pip -r requirements.txt
+$ python server.py
 -> access simplechat.html
