@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import bleach
 
 def get_mongo_database(db_name,host="localhost",port=27017,username=None,password=None):
     if username and password :
@@ -12,16 +13,16 @@ DB_NAME = "simple_chat_database"
 db = get_mongo_database(DB_NAME)
 collection = db["simple_chat"]
 
-messages = [
-    {"time":1579236522,"name":"foo","payload":"Hello bar!"},
-    {"time":1579236661,"name":"bar","payload":"Hello foo!"},
-]
-
-
 def get_messages(query=None):
     if query :
-        return collection.find(query)
-    return collection.find()
+        messages = list(collection.find(query))
+    else :
+        messages = list(collection.find())
+
+    # _idをオブジェクトから文字列になおす
+    for i in range(len(messages)) :
+        messages[i]["_id"] = str(messages[i]["_id"])
+    return messages
 
 def add_message(username,post_time,payload):
     message = {"time":int(post_time),"name":username,"payload":payload}
@@ -32,6 +33,10 @@ def main():
     collection.drop()
 
     # テストデータを挿入
+    messages = [
+        {"time":1579236522,"name":"foo","payload":"Hello bar!"},
+        {"time":1579236661,"name":"bar","payload":"Hello foo!"},
+    ]
     for msg in messages :
         collection.insert(msg)
 

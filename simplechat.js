@@ -1,6 +1,8 @@
-var APIURL = "http://localhost:8000/"
+var APIURL = "http://133.24.97.178:8000/"
 var items = []
 var query = "";
+var date = new Date();
+var changed = false;
 
 var setItems = function(query){
     d3.json(APIURL+query,function(error,data){
@@ -36,11 +38,9 @@ var MessageForm = {
     template:"#message-form",
     methods:{
         pushDataBase:function(){
-            var date = new Date() ;
             var post_time = date.getTime();
             post_time = Math.floor( post_time / 1000 );
             POST_URL = APIURL+"post/"+this.name+"&"+post_time+"&"+this.msg;
-            console.log(POST_URL);
             fetch(POST_URL);
             setItems("");
             this.msg = "";
@@ -51,7 +51,7 @@ var MessageForm = {
 new Vue({
     el:"#app",
     created:function(){
-        setInterval(() => setItems(""),10000);
+        setInterval(() => setItems(""), 10000);
     },
     components:{
         MessageList:MessageList,
