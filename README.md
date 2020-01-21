@@ -8,6 +8,9 @@ Vue.js,Flaskを使ったシンプルなチャット
 * requirements: requirements.txt
 
 ## Start
-$ pip -r requirements.txt
-$ python server.py
--> access simplechat.html
+自分のIPアドレスをsimplechat.jsのAPIURLに書き込む
+-> var APIURL = http://123.45.67.890:8000  
+コマンドラインで以下を実行  
+$ pip -r requirements.txt  
+$ python server.py  
+http://123.45.67.890:8080/simplechat.htmlにアクセス  
