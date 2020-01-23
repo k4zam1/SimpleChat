@@ -1,4 +1,4 @@
-var APIURL = "http://localhost:8000/"
+
 var items = []
 var query = "";
 var date = new Date();
