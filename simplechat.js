@@ -1,4 +1,4 @@
-
+// APIURL = "http://ip_addr:8000/"
 var items = []
 var query = "";
 var date = new Date();
