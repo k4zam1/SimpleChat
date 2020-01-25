@@ -11,6 +11,7 @@
 
 ## Install
 コマンドラインで以下を実行
+$ cd simplechat/
 $ python -m venv simplechat  
 $ ./simplechat/Scripts/activate  
 $ pip -r requirements.txt  
