@@ -54,6 +54,7 @@ new Vue({
         setInterval(() => setItems(""), 10000);
     },
     components:{
+        // todo atomicデザインにする
         MessageList:MessageList,
         MessageForm:MessageForm
     }
